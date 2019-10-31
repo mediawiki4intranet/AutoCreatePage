@@ -48,7 +48,7 @@ $GLOBALS['wgExtensionMessagesFiles']['AutoCreatePageMagic'] =  dirname(__FILE__)
 
 $GLOBALS['wgExtensionFunctions'][] = function() {
 
-	$GLOBALS['wgHooks']['ParserFirstCallInit'][] = function ( \Parser &$parser ) {
+	$GLOBALS['wgHooks']['ParserFirstCallInit'][] = function ( \Parser $parser ) {
 
 		$parser->setFunctionHook( 'createPage', function( $parser ) {
 			return createPageIfNotExisting( func_get_args() );
@@ -111,7 +111,7 @@ function createPageIfNotExisting( array $rawParams ) {
  * after the safe is complete to avoid any concurrent article modifications.
  * Note that article is, in spite of its name, a WikiPage object since MW 1.21.
  */
-function doCreatePages( &$article, &$editInfo, $changed ) {
+function doCreatePages( $article, $editInfo, $changed ) {
 	global $egAutoCreatePageMaxRecursion;
 
 	$createPageData = $editInfo->output->getExtensionData( 'createPage' );
